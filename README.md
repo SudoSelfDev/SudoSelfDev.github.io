@@ -8,7 +8,7 @@ My name is El Mehdi Azgaou. I am transitioning from a career in customer service
 
 ## The Blog
 
-The website includes a [blog](/blog/) where I share my technical progress, insights, and what I've learned while transitioning into the tech industry.
+The website includes a [blog](https://www.sudoself.dev/blog) where I share my technical progress, insights, and what I've learned while transitioning into the tech industry.
 
 ## Technologies Used
 

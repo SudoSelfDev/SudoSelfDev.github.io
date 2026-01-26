@@ -54,19 +54,7 @@ a:hover {
 }
 
 
-.container main p.intro {
-    margin-bottom: 40px;
-}
 
-.container main p.intro span.span1 {
-    font-weight: bold;
-    color: black;
-    font-size: 24px;
-}
-
-.container main p.current {
-    margin-bottom: 20px;
-}
 
 .container main a {
     font-weight: normal;

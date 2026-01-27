@@ -8,12 +8,18 @@
 }
 
 a {
-    color: rgb(6, 148, 65);
+    color: #264cca;
     font-size: 20px;
+    transition: color 0.5s ease-in-out;
 }
 
 a:hover {
-    color: rgb(7, 78, 37);
+    color: #061b63;
+}
+
+body {
+    background-color: #fff;
+    transition: background-color 1s ease-in-out;
 }
 
 .container {
@@ -52,6 +58,7 @@ a:hover {
     font-size: 18px;
     color: rgb(106, 110, 110);
     font-weight: 300;
+    transition: color 1s ease-in-out;
 }
 
 
@@ -63,6 +70,7 @@ a:hover {
     font-weight: bold;
     color: black;
     font-size: 24px;
+    transition: color 1s ease-in-out;
 }
 
 .container main p.current {
@@ -90,3 +98,22 @@ footer li a {
     font-size: 15px;
 }
 
+
+
+/* ======================Dark mode=================== */
+
+body.dark-mode {
+    background-color: black;
+}
+
+body.dark-mode a {
+    color: #264cca;
+}
+
+body.dark-mode  .container .main-container span.span1 {
+    color: #fff;
+}
+
+body.dark-mode .container main {
+    color: rgb(173, 173, 173);
+}

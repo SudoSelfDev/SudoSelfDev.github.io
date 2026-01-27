@@ -4,6 +4,7 @@
     box-sizing: border-box;
     text-decoration: none;
     font-family: "Solway", serif;
+    list-style: none;
 }
 
 a {
@@ -63,8 +64,11 @@ footer {
     margin: 0 auto;
 }
 
-footer li {
-    list-style: none;
+
+footer p{
+    font-family: "VT323", monospace;
+    text-align: center;
+    color: rgb(194, 193, 193);
 }
 
 footer li a {

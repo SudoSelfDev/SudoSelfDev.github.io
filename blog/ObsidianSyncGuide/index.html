@@ -1,40 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SudoSelf.dev</title>
-        <link rel="stylesheet" href="main.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Solway:wght@300;400;500;700;800&family=VT323&display=swap" rel="stylesheet">
-    <body>
-        <div class="container">
-            <nav>
-                <a href="https://www.sudoself.dev/" class="logo">SudoSelf.dev</a>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SudoSelf.dev</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Solway:wght@300;400;500;700;800&family=VT323&display=swap"
+        rel="stylesheet">
+
+<body>
+    <div class="container">
+        <nav>
+            <a href="https://www.sudoself.dev/" class="logo">SudoSelf.dev</a>
+
+            <ul>
+                <li><a href="../../">/home</a></li>
+                <li><a href="https://github.com/SudoSelfDev" target="_blank">/github</a></li>
+                <a href="#" id="darkToggle" role="button">🌙</a>
+            </ul>
+        </nav>
+        <div class="main-container">
+            <main>
+                <h1>Obsidian Vault Sync with Git/GitHub</h1>
+
+                <p>This guide serves as a comprehensive walkthrough for Obsidian users who want to leverage Git and
+                    GitHub for seamless synchronization of their knowledge vault across multiple devices. It covers both
+                    manual setup and the automation of the syncing process using custom scripts, providing a free and
+                    robust version-controlled alternative to paid services.</p>
+
+                <h2>Part 1: Guide on How to Sync Obsidian Using Git/GitHub</h2>
+
+                <h3>Initial Git Setup</h3>
                 <ul>
-                    <li><a href="../../">/home</a></li>
-                    <li><a href="https://github.com/SudoSelfDev" target="_blank">/github</a></li>
-                    <a href="#" id="darkToggle" role="button">🌙</a>
+                    <li><strong>Installing Git:</strong> Before you begin, ensure Git is installed. You can typically
+                        install it using your system's package manager (e.g., <code>sudo apt-get install git</code> on
+                        Debian/Ubuntu, or <code>brew install git</code> on macOS).</li>
+                    <li><strong>Initializing a Git Repository:</strong> Open a terminal, navigate to your Obsidian
+                        vault's root folder, and run <code>git init</code>. This command turns your vault into a local
+                        Git repository.</li>
+                    <li><strong>Creating a GitHub Repository:</strong> Go to GitHub, create a new repository, and make
+                        sure to set it to <strong>Private</strong> to keep your notes secure.</li>
+                    <li><strong>Linking Local Repository to GitHub:</strong> Connect your local vault to the remote
+                        GitHub repository using the command:
+                        <code>git remote add origin git@github.com:YourUsername/your-repo-name.git</code>.
+                    </li>
+                    <li><strong>Create and Add SSH Keys:</strong> For secure, password-free communication with GitHub,
+                        generate an SSH key (<code>ssh-keygen -t ed25519 -C "your_email@example.com"</code>) and add the
+                        public key to your GitHub account settings.</li>
                 </ul>
-            </nav>
-            <div class="main-container">
-                <main>
-                <p class="intro"><span class="span1">El Mehdi Azgaou.</span> Bridging the gap between human solutions and technical execution. By day, I solve complex customer issues; by night, I’m architecting my future in software and cloud engineering. I’m not just changing careers—I’m bringing a user-first mindset to the world of dev.</p>
-                <p class="current">I am currently developing a blog to document my technical progress and share insights from my journey transitioning from customer service into the tech industry.</p>
 
-                <a href="/blog/"> &rarr; Read the blog</a>
+                <h3>Basic Git Workflow</h3>
+                <p>The day-to-day process involves a few key commands:</p>
+                <ul>
+                    <li><code>git pull</code>: Always run this first to fetch changes from the remote repository.</li>
+                    <li><code>git add .</code>: Stages all your new files and modifications.</li>
+                    <li><code>git commit -m "Your message"</code>: Saves a snapshot of your staged changes.</li>
+                    <li><code>git push</code>: Uploads your saved changes to GitHub.</li>
+                </ul>
+                <p><strong>Handling Merge Conflicts:</strong> If you edit the same note on different devices without
+                    syncing, you might encounter a merge conflict. Git will mark the conflicted areas in the file.
+                    Simply open the file, edit it to resolve the differences, and then commit the file again.</p>
+
+                <h3>Best Practices</h3>
+                <ul>
+                    <li><strong>.gitignore:</strong> Create a <code>.gitignore</code> file in your vault's root to
+                        exclude Obsidian's temporary files and user-specific settings (like
+                        <code>.obsidian/workspace</code> or <code>.obsidian/cache/</code>) from being tracked.
+                    </li>
+                    <li><strong>Frequency of Commits:</strong> Commit your changes frequently, such as at the end of a
+                        work session or when you switch devices, to maintain a clean history and minimize conflicts.
+                    </li>
+                </ul>
+
+                <h2>Part 2: Guide on How to Create a Script to Easily Sync the Vault</h2>
+
+                <h3>Introduction to Automation</h3>
+                <p>Why automate? It’s convenient, reduces the chance of errors, and ensures a consistent sync process
+                    every time. A simple script can combine all the manual Git commands into one.</p>
+                <h3>Script Development (Bash Example)</h3>
+                <p>Here is an example of a Bash script for automating the sync process on Linux-based systems. Create a
+                    new file named <code>vault-sync</code>.</p>
+                <pre><code>#!/bin/bash
+
+                    # Exit immediately if a command exits with a non-zero status.
+                    set -e
+
+                    # IMPORTANT: Replace this path with the absolute path to YOUR vault.
+                    VAULT_PATH="$HOME/kernel-vault"
+
+                    echo "🔄 Starting vault synchronization..."
+                    cd "$VAULT_PATH" || { echo "❌ Vault directory not found!"; exit 1; }
+
+                    # Remove lock file if it exists to prevent errors from previous crashes
+                    if [ -f .git/index.lock ]; then
+                        rm .git/index.lock
+                        echo "⚠️  Removed existing git lock file."
+                    fi
+
+                    echo "📥 Pulling remote changes..."
+                    git pull origin main
+
+                    echo "📤 Committing changes..."
+                    git add .
+                    git commit -m "Automated sync: $(date +'%Y-%m-%d %H:%M:%S')" || true
+
+                    echo "🚀 Pushing changes to GitHub..."
+                    git push origin main
+
+                    echo "✅ Vault synchronized successfully!"
+                </code></pre>
+
+                <h3>Making the Script Executable and Global</h3>
+                <p>To run this script from any directory, you need to make it executable and move it to a location in
+                    your system's PATH.</p>
+                <pre><code>chmod +x vault-sync
+sudo mv vault-sync /usr/local/bin/</code></pre>
+                <p>Now, you can simply type <code>vault-sync</code> in your terminal to synchronize your vault.</p>
+
+
+
+
+                <h3>Error Handling & Logging</h3>
+                <p>The script includes <code>set -e</code> which causes the script to exit immediately if a command
+                    fails. It also includes basic logging with <code>echo</code> statements to show the progress of the
+                    sync operation and removes a potential Git lock file that can cause issues.</p>
             </main>
 
-            
-            </div>
-            <footer>
-                <p>SudoSelf.dev</p>
-                <li><a href="mailto:elmehdiazgaou@gmail.com">/contact</a></li>
-
-            </footer>
-            <script src="../../JS/main.js"></script>
         </div>
-    </body>
-    </html>
+
+
+
+        <footer>
+            <p>SudoSelf.dev</p>
+            <li><a href="mailto:elmehdiazgaou@gmail.com">/contact</a></li>
+        </footer>
+        <script src="../../JS/main.js"></script>
+    </div>
+</body>
+
+</html>

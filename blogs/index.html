@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sudoself.dev | Cloud Engineer Portfolio</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <meta name="description" content="Portfolio of El Mehdi, Cloud Engineer.">
+    <title>sudoself.dev | Logs</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <meta name="description" content="Technical blogs and notes by El Mehdi.">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700;800&display=swap"
@@ -14,7 +14,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* Specific styles for the blog page */
+        .blog-list {
+            text-align: left;
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .blog-item {
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 2rem;
+            border-bottom: 1px dashed var(--outline-variant);
+            transition: all 0.3s ease;
+        }
+
+        .blog-item:hover {
+            transform: translateX(10px);
+        }
+
+        .blog-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .blog-item:hover .blog-title {
+            text-decoration-color: var(--primary);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .blog-excerpt {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,10 +80,10 @@
     <!-- Top Navigation -->
     <header class="top-nav">
         <div class="nav-brand">
-            <a href="index.html" class="brand font-mono text-primary">[sudoself.dev]</a>
+            <a href="../index.html" class="brand font-mono text-primary">[sudoself.dev]</a>
         </div>
         <nav class="nav-links">
-            <a href="blogs/index.html" class="nav-link font-mono">/Logs</a>
+            <a href="../index.html" class="nav-link font-mono" style="color: var(--primary);">/Home</a>
             <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark mode">
                 <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
             </button>
@@ -51,41 +102,27 @@
             <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
 
-        <div class="max-w-4xl">
+        <div class="max-w-4xl" style="width: 100%; max-width: 48rem;">
             <div class="status-badge font-mono text-primary">
-                Status: System Online // Region: Global
+                System Log // Entries
             </div>
 
-            <div class="title-container">
-                <div class="title-line"></div>
-                <h1 class="main-title font-mono">Cloud Engineer <span class="title-sub">[ in the making ]</span></h1>
-                <div class="title-line"></div>
+            <div class="title-container" style="justify-content: flex-start;">
+                <h1 class="main-title font-mono" style="text-align: left;">Technical Archive</h1>
+                <div class="title-line" style="flex-grow: 1;"></div>
             </div>
 
-            <p class="bio-text">
-                I'm <span class="highlight">El Mehdi</span> — a problem-solver by training, a cloud engineer by choice.
-                Years in customer service sharpened something in me: the ability to stay calm under pressure, ask the
-                right questions, and find solutions that actually work.
-                <br><br>
-                That same mindset is now what drives my transition into tech. Good engineering, I believe, starts with
-                understanding people — and that's something I've been doing for years.
-                <br><br>
-                I'm currently following the <a href="https://learntocloud.guide/" class="bio-link" target="_blank" rel="noopener">Learn to Cloud</a>
-                roadmap, built by the
-                amazing <a href="https://x.com/madebygps" class="bio-link" target="_blank" rel="noopener"
-                    style="font-style: italic; opacity: 0.8;">@madebygps</a>, starting from the ground up —
-                Linux, Bash, and everything that comes after. The destination is clear: a career as a <span
-                    class="tech-tag font-mono">Cloud Engineer</span>.
-            </p>
+            <div class="blog-list">
+                <article class="blog-item">
+                    <div class="blog-date font-mono">2026-03-27 // LOG_001</div>
+                    <a href="obsidian-git-sync/index.html" class="blog-title font-mono font-bold">Obsidian Vault Sync with Git/GitHub</a>
+                    <p class="blog-excerpt font-body">A comprehensive guide to syncing your Obsidian vault across
+                        devices using Git and GitHub — covering initial setup, SSH keys, daily workflow, and
+                        automation scripts for both Ubuntu and Android (Termux).</p>
+                </article>
+            </div>
         </div>
 
-        <!-- Terminal CTA -->
-        <div class="cta-container">
-            <a href="mailto:contact@sudoself.dev" class="cta-link font-mono text-primary">
-                <span>> execute_contact_sequence</span>
-                <span class="cursor-blink"></span>
-            </a>
-        </div>
     </main>
 
     <!-- Footer -->
@@ -101,11 +138,14 @@
             </a>
         </div>
         <div class="footer-meta">
-            <span class="copyright font-mono">© 2026 sudoself.dev</span>
+            <span class="copyright font-mono">© 2026 sudoself</span>
+            <a href="mailto:contact@sudoself.dev" class="contact-link font-mono overflow-h">
+                /contact
+            </a>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
 </body>
 
 </html>

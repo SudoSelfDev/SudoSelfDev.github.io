@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sudoself.dev | Obsidian Git Sync Guide</title>
+    <link rel="icon" type="image/png" href="../../favicon.png">
+    <meta name="description"
+        content="A comprehensive guide to syncing your Obsidian vault across devices using Git and GitHub, including automation scripts for Ubuntu and Android.">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../../style.css">
+
+    <style>
+        /* Blog Post Specific Styles */
+        .blog-post-content {
+            text-align: left;
+            width: 100%;
+        }
+
+        .blog-post-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.15em;
+        }
+
+        .blog-post-title {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .blog-post-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .blog-section-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed var(--outline-variant);
+            letter-spacing: 0.1em;
+        }
+
+        .blog-subsection-title {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .blog-body {
+            font-size: 1rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .light-mode .blog-body {
+            color: var(--text-primary);
+        }
+
+        .blog-body a {
+            color: var(--primary);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .blog-body a:hover {
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .blog-list-items {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-list-items li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .blog-list-items li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .code-block {
+            background-color: var(--surface-container-lowest);
+            border: 1px solid var(--outline-variant);
+            border-radius: 0;
+            padding: 1.25rem;
+            margin: 1rem 0 1.5rem;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block-header {
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--outline-variant);
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            white-space: pre;
+        }
+
+        .code-inline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8125rem;
+            background-color: var(--surface-container);
+            border: 1px solid var(--outline-variant);
+            padding: 0.125rem 0.375rem;
+            color: var(--primary);
+        }
+
+        .callout-box {
+            border-left: 3px solid var(--primary);
+            background-color: var(--surface-container-low);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .callout-box strong {
+            color: var(--primary);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            text-align: center;
+            background-color: var(--surface-container-highest);
+            border: 1px solid var(--outline-variant);
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .blog-divider {
+            border: none;
+            border-top: 1px dashed var(--outline-variant);
+            margin: 2.5rem 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Table of Contents */
+        .toc {
+            background-color: var(--surface-container-low);
+            border: 1px solid var(--outline-variant);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc-header {
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--outline-variant);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toc-list li a {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toc-list li a:hover {
+            color: var(--primary);
+            padding-left: 0.25rem;
+        }
+
+        .toc-list li a .toc-num {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .blog-section-title {
+            scroll-margin-top: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .blog-post-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Decorative Structural Elements -->
+    <div class="circuit-layer">
+        <div class="circuit-line-h c-top-1"></div>
+        <div class="circuit-line-h c-top-2"></div>
+        <div class="circuit-line-v c-left-1"></div>
+        <div class="circuit-line-v c-right-1"></div>
+    </div>
+
+    <!-- Top Navigation -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <a href="../../index.html" class="brand font-mono text-primary">[sudoself.dev]</a>
+        </div>
+        <nav class="nav-links">
+            <a href="../index.html" class="nav-link font-mono">/Logs</a>
+            <a href="../../index.html" class="nav-link font-mono" style="color: var(--primary);">/Home</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark mode">
+                <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" style="justify-content: flex-start;">
+        <!-- SVG Grid Background -->
+        <svg class="bg-grid-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                    <path d="M 80 0 L 0 0 0 80" fill="none" stroke="var(--primary)" stroke-width="0.5" />
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+
+        <div class="max-w-4xl" style="width: 100%; max-width: 48rem;">
+
+            <a href="../index.html" class="back-link font-mono">
+                <span>&lt;-</span> /back_to_archive
+            </a>
+
+            <div class="blog-post-content">
+                <div class="blog-post-meta font-mono">2026-03-27 // LOG_001 // GUIDE</div>
+                <h1 class="blog-post-title font-mono">Obsidian Vault Sync with Git/GitHub</h1>
+                <p class="blog-post-subtitle">A comprehensive guide to syncing your knowledge vault across devices — manually and with automation.</p>
+
+                <!-- Table of Contents -->
+                <nav class="toc">
+                    <div class="toc-header font-mono">// Table of Contents</div>
+                    <ol class="toc-list font-mono">
+                        <li><a href="#setup"><span class="toc-num">01</span> Setting Up Git for Your Vault</a></li>
+                        <li><a href="#workflow"><span class="toc-num">02</span> The Basic Git Workflow</a></li>
+                        <li><a href="#best-practices"><span class="toc-num">03</span> Best Practices</a></li>
+                        <li><a href="#automation"><span class="toc-num">04</span> Automating the Sync (Desktop & Android Scripts)</a></li>
+                        <li><a href="#error-handling"><span class="toc-num">05</span> Error Handling & Tips</a></li>
+                    </ol>
+                </nav>
+
+                <hr class="blog-divider">
+
+                <!-- INTRO -->
+                <p class="blog-body">
+                    If you use <a href="https://obsidian.md/" target="_blank" rel="noopener">Obsidian</a> for note-taking,
+                    you've probably hit the sync problem: how do you keep your vault consistent across your laptop, desktop,
+                    and phone — without paying for Obsidian Sync?
+                </p>
+                <p class="blog-body">
+                    The answer? <strong>Git and GitHub.</strong> It's free, reliable, version-controlled, and once set up,
+                    can be fully automated with a simple script. This guide walks you through the entire process.
+                </p>
+
+                <!-- SECTION 1: GIT SETUP -->
+                <h2 id="setup" class="blog-section-title font-mono">// 01. Setting Up Git for Your Vault</h2>
+
+                <h3 class="blog-subsection-title font-mono">Install Git</h3>
+                <p class="blog-body">If you haven't already, install Git on your system:</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Terminal</div>
+                    <pre># Ubuntu / Debian
+sudo apt update && sudo apt install git
+
+# macOS (via Homebrew)
+brew install git
+
+# Verify installation
+git --version</pre>
+                </div>
+
+                <h3 class="blog-subsection-title font-mono">Initialize a Repository in Your Vault</h3>
+                <p class="blog-body">Navigate to your Obsidian vault folder and initialize Git:</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Terminal</div>
+                    <pre>cd ~/your-obsidian-vault
+git init
+git branch -M main</pre>
+                </div>
+
+                <h3 class="blog-subsection-title font-mono">Create a GitHub Repository</h3>
+                <ul class="blog-list-items">
+                    <li>Go to <a href="https://github.com/new" target="_blank" rel="noopener">github.com/new</a></li>
+                    <li>Name it something like <span class="code-inline">obsidian-vault</span></li>
+                    <li>Set it to <strong>Private</strong> — your notes are personal</li>
+                    <li>Do <strong>not</strong> initialize with a README (you already have local files)</li>
+                </ul>
+
+                <h3 class="blog-subsection-title font-mono">Link Local to Remote</h3>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Terminal</div>
+                    <pre>git remote add origin git@github.com:YourUsername/your-vault.git
+git add .
+git commit -m "Initial commit: vault setup"
+git push -u origin main</pre>
+                </div>
+
+                <h3 class="blog-subsection-title font-mono">Set Up SSH Keys</h3>
+                <p class="blog-body">SSH keys let you push and pull without typing your password every time.</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Terminal</div>
+                    <pre># Generate a new SSH key
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# Start the SSH agent
+eval "$(ssh-agent -s)"
+
+# Add your key
+ssh-add ~/.ssh/id_ed25519
+
+# Copy the public key to clipboard
+cat ~/.ssh/id_ed25519.pub</pre>
+                </div>
+                <p class="blog-body">
+                    Then go to <a href="https://github.com/settings/keys" target="_blank" rel="noopener">GitHub → Settings → SSH Keys</a>,
+                    click <strong>"New SSH Key"</strong>, paste your key, and save.
+                </p>
+
+                <!-- SECTION 2: BASIC WORKFLOW -->
+                <h2 id="workflow" class="blog-section-title font-mono">// 02. The Basic Git Workflow</h2>
+
+                <p class="blog-body">Once everything is linked, here's the daily workflow:</p>
+
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Daily Sync Workflow</div>
+                    <pre># Pull the latest changes (always do this first)
+git pull origin main
+
+# Stage all changes
+git add .
+
+# Commit with a message
+git commit -m "sync: updated notes"
+
+# Push to GitHub
+git push origin main</pre>
+                </div>
+
+                <div class="callout-box">
+                    <strong>💡 Handling Merge Conflicts:</strong> If you edited the same note on two devices without syncing,
+                    Git will flag a conflict. Open the file, look for the <span class="code-inline">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+                    markers, choose which version to keep, then commit and push again.
+                </div>
+
+                <!-- SECTION 3: GITIGNORE -->
+                <h2 id="best-practices" class="blog-section-title font-mono">// 03. Best Practices</h2>
+
+                <h3 class="blog-subsection-title font-mono">Set Up .gitignore</h3>
+                <p class="blog-body">Create a <span class="code-inline">.gitignore</span> file in your vault root to exclude Obsidian workspace clutter:</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">.gitignore</div>
+                    <pre>.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+.DS_Store</pre>
+                </div>
+
+                <ul class="blog-list-items">
+                    <li>Commit frequently — at the end of every session is a good rule</li>
+                    <li>Always pull before you start editing on a new device</li>
+                    <li>Keep your repo private if your notes contain anything sensitive</li>
+                </ul>
+
+                <hr class="blog-divider">
+
+                <!-- SECTION 4: AUTOMATION -->
+                <h2 id="automation" class="blog-section-title font-mono">// 04. Automating the Sync with Scripts</h2>
+
+                <p class="blog-body">
+                    Typing <span class="code-inline">git add</span>, <span class="code-inline">git commit</span>,
+                    <span class="code-inline">git push</span> every time gets old fast. Let's automate it with a single command:
+                    <span class="code-inline">vaultsync</span>.
+                </p>
+
+                <!-- DESKTOP SCRIPT -->
+                <h3 class="blog-subsection-title font-mono">The Desktop Sync Script (Linux, macOS, Windows)</h3>
+
+                <p class="blog-body">Open your terminal and create the file:</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Terminal</div>
+                    <pre>nano ~/vaultsync.sh</pre>
+                </div>
+
+                <p class="blog-body">Paste the following code:</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">vaultsync.sh // Bash</div>
+                    <pre>#!/bin/bash
+
+# Configuration
+VAULT_PATH="$HOME/obsidian-vault" # Update this if your path is different
+
+# 1. Navigate to Vault
+cd "$VAULT_PATH" || { echo "❌ Vault directory not found!"; exit 1; }
+
+echo "---------------------------------------"
+echo "🚀 Starting Obsidian-Vault Sync..."
+echo "---------------------------------------"
+
+# 2. Check for Git Lock files (prevents errors if a previous sync crashed)
+if [ -f .git/index.lock ]; then
+    rm .git/index.lock
+    echo "⚠️  Removed existing git lock file."
+fi
+
+# 3. Pull latest changes
+echo "📥 Pulling from Remote..."
+git pull origin main
+
+# 4. Add and Commit
+# This adds all changes and uses a timestamped message
+echo "📤 Committing changes..."
+git add .
+git commit -m "desktop sync: $(date +'%Y-%m-%d %H:%M:%S')"
+
+# 5. Push to GitHub
+echo "🚀 Pushing to GitHub..."
+git push origin main
+
+echo "---------------------------------------"
+echo "✅ Sync Complete! Your vault is updated."
+echo "---------------------------------------"</pre>
+                </div>
+
+                <h3 class="blog-subsection-title font-mono">Make it Executable and Global</h3>
+                <p class="blog-body">To run this by simply typing <span class="code-inline">vaultsync</span>, follow the steps for your operating system:</p>
+
+                <p class="blog-body" style="font-weight: 600; color: var(--primary); margin-top: 1.5rem;">Linux / macOS</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Terminal</div>
+                    <pre># 1. Make the script executable
+chmod +x ~/vaultsync.sh
+
+# 2. Move it to your local bin (so it's in your PATH)
+sudo mv ~/vaultsync.sh /usr/local/bin/vaultsync
+
+# 3. Test it — just type from any directory
+vaultsync</pre>
+                </div>
+
+                <p class="blog-body" style="font-weight: 600; color: var(--primary); margin-top: 1.5rem;">Windows (Git Bash)</p>
+                <p class="blog-body">If you're on Windows, you can run this bash script using the Git Bash terminal.</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Git Bash</div>
+                    <pre># 1. Make sure it's saved in your home directory
+mv vaultsync.sh ~/vaultsync.sh
+
+# 2. Add an alias to your .bashrc file
+echo "alias vaultsync='~/vaultsync.sh'" >> ~/.bashrc
+source ~/.bashrc
+
+# 3. Test it — just type
+vaultsync</pre>
+                </div>
+
+                <hr class="blog-divider">
+
+                <!-- ANDROID SCRIPT -->
+                <h3 class="blog-subsection-title font-mono">The Android Sync Script (Termux)</h3>
+
+                <p class="blog-body">Open <strong>Termux</strong> and follow these steps to create the shortcut:</p>
+
+                <p class="blog-body"><span class="step-number">1</span> Open your bash configuration:</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Termux</div>
+                    <pre>nano ~/.bashrc</pre>
+                </div>
+
+                <p class="blog-body"><span class="step-number">2</span> Scroll to the bottom and paste this code:</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">.bashrc // Bash Function</div>
+                    <pre># Obsidian-Vault Sync Shortcut
+
+vaultsync() {
+    echo "Starting Sync for obsidian-vault..."
+    cd /storage/emulated/0/obsidian-vault
+    echo "📥 Pulling changes from GitHub..."
+    git pull
+    echo "📤 Pushing changes to GitHub..."
+    git add .
+    # This automatically adds the date and time to your commit message
+    git commit -m "mobile sync: $(date +'%Y-%m-%d %H:%M:%S')"
+    git push
+    echo "✅ Sync Complete!"
+}</pre>
+                </div>
+
+                <p class="blog-body"><span class="step-number">3</span> Save and Exit: Press <span class="code-inline">Ctrl + O</span>, then <span class="code-inline">Enter</span>, then <span class="code-inline">Ctrl + X</span>.</p>
+
+                <p class="blog-body"><span class="step-number">4</span> Reload the config:</p>
+                <div class="code-block">
+                    <div class="code-block-header font-mono">Termux</div>
+                    <pre>source ~/.bashrc</pre>
+                </div>
+
+                <p class="blog-body">Now just type <span class="code-inline">vaultsync</span> in Termux and your vault syncs instantly.</p>
+
+                <hr class="blog-divider">
+
+                <!-- SECTION 5: ERROR HANDLING -->
+                <h2 id="error-handling" class="blog-section-title font-mono">// 05. Error Handling & Tips</h2>
+
+                <ul class="blog-list-items">
+                    <li>The Ubuntu script already handles stale <span class="code-inline">.git/index.lock</span> files — a common issue after interrupted syncs</li>
+                    <li>Add <span class="code-inline">set -e</span> at the top of your script to stop execution on any error</li>
+                    <li>You can add logging with: <span class="code-inline">echo "$(date) - Sync successful" >> ~/vaultsync.log</span></li>
+                    <li>Use <span class="code-inline">git stash</span> before pulling if you want to test changes without risking conflicts</li>
+                </ul>
+
+                <div class="callout-box">
+                    <strong>🎯 End goal:</strong> One command — <span class="code-inline">vaultsync</span> — on any device,
+                    and your entire knowledge vault is backed up, version-controlled, and in sync. No subscriptions, no third-party apps.
+                    Just Git.
+                </div>
+
+                <hr class="blog-divider">
+
+                <p class="blog-body" style="opacity: 0.6; font-style: italic;">
+                    — El Mehdi // sudoself.dev
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="position: relative;">
+        <div class="socials">
+            <a href="https://github.com/SudoSelfDev" class="social-link font-mono" target="_blank" rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                <span class="social-text">SudoSelfDev</span>
+            </a>
+            <a href="https://x.com/ElAzgaou" class="social-link font-mono" target="_blank" rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <span class="social-text">@ElAzgaou</span>
+            </a>
+        </div>
+        <div class="footer-meta">
+            <span class="copyright font-mono">© 2026 sudoself.dev</span>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+</body>
+
+</html>

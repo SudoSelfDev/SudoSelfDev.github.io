@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-    
-    // Check local storage for theme preference
+
+    // Check local storage for theme preference, fallback to OS preference
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
         document.documentElement.classList.add('light-mode');
         themeIcon.textContent = 'dark_mode';
     }
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Toggle theme
     themeToggle.addEventListener('click', () => {
         document.documentElement.classList.toggle('light-mode');
-        
+
         if (document.documentElement.classList.contains('light-mode')) {
             themeIcon.textContent = 'dark_mode';
             localStorage.setItem('theme', 'light');

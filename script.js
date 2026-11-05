@@ -14,6 +14,24 @@
     });
   }
 
+  // Mobile menu
+  var menuBtn = document.getElementById('menu-toggle');
+  var nav = document.getElementById('site-nav');
+  function setMenu(open) {
+    if (!menuBtn || !nav) return;
+    nav.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  if (menuBtn && nav) {
+    menuBtn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+    nav.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); menuBtn.focus(); }
+    });
+    window.matchMedia('(min-width: 641px)').addEventListener('change', function (e) { if (e.matches) setMenu(false); });
+  }
+
   function copyText(text, button, idle) {
     function done(msg) {
       button.textContent = msg;

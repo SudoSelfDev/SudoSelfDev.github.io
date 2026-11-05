@@ -1,37 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
+(function () {
+  var root = document.documentElement;
 
-    // Check local storage for theme preference, fallback to OS preference
-    const savedTheme = localStorage.getItem('theme');
-    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  function currentTheme() {
+    return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  }
 
-    if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
-        document.documentElement.classList.add('light-mode');
-        themeIcon.textContent = 'dark_mode';
+  var toggle = document.getElementById('theme-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var next = currentTheme() === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  }
+
+  function copyText(text, button, idle) {
+    function done(msg) {
+      button.textContent = msg;
+      setTimeout(function () { button.textContent = idle; }, 1500);
     }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done('Copied'); }, function () { done('Select and copy'); });
+    } else {
+      done('Select and copy');
+    }
+  }
 
-    // Toggle theme
-    themeToggle.addEventListener('click', () => {
-        document.documentElement.classList.toggle('light-mode');
+  // Copy button on every code block
+  document.querySelectorAll('.code-block').forEach(function (block) {
+    var header = block.querySelector('.code-block-header');
+    var pre = block.querySelector('pre');
+    if (!header || !pre) return;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = 'Copy';
+    b.setAttribute('aria-label', 'Copy code');
+    b.addEventListener('click', function () { copyText(pre.innerText, b, 'Copy'); });
+    header.appendChild(b);
+  });
 
-        if (document.documentElement.classList.contains('light-mode')) {
-            themeIcon.textContent = 'dark_mode';
-            localStorage.setItem('theme', 'light');
-        } else {
-            themeIcon.textContent = 'light_mode';
-            localStorage.setItem('theme', 'dark');
-        }
+  // Copy button for the email address
+  var copyMail = document.getElementById('copy-email');
+  if (copyMail) {
+    copyMail.addEventListener('click', function () {
+      copyText(document.getElementById('addr').textContent, copyMail, 'Copy');
     });
-
-    // Animate the circuit lines subtly
-    const lines = document.querySelectorAll('.circuit-line-h, .circuit-line-v');
-    lines.forEach(line => {
-        // Random opacity pulse
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                line.style.opacity = Math.random() * 0.5 + 0.1;
-            }
-        }, Math.random() * 2000 + 1000);
-    });
-});
+  }
+})();

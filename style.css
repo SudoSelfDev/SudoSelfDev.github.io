@@ -366,9 +366,7 @@ h2.section-title {
   .hero .title { bottom: 10%; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; scroll-behavior: auto !important; }
-}
+
 
 /* ---------- mobile navigation ---------- */
 @media (max-width: 640px) {
@@ -379,4 +377,28 @@ h2.section-title {
   .site-header nav ul { flex-direction: column; gap: 0; }
   .site-header nav li + li { border-top: 1px solid var(--line); }
   .site-header nav a { display: block; padding: 14px 2px; font-size: 1.15rem; color: var(--soft); }
+}
+
+/* ---------- motion ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes settle { from { opacity: 0; letter-spacing: .7em; } to { opacity: 1; letter-spacing: .38em; } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--ok); } 70%, 100% { box-shadow: 0 0 0 8px transparent; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* Hero loads in a short sequence: portrait, then "I AM", then the name */
+.hero .portrait { animation: rise 1s cubic-bezier(.2, .7, .2, 1) both; }
+.hero .iam { animation: fade .8s ease .6s both; }
+.hero h1 { animation: settle 1.2s cubic-bezier(.2, .7, .2, 1) .75s both; }
+.status i { animation: pulse 2.6s ease-out infinite; }
+.js .site-header nav.open { animation: drop .22s ease-out; }
+
+/* Sections fade up once as they scroll into view (only when JavaScript runs) */
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1); transition-delay: var(--d, 0ms); }
+.js .reveal.in { opacity: 1; transform: none; }
+.js .entry.reveal.in { transition: opacity .7s ease var(--d, 0ms), transform .3s, border-color .2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; transform: none; }
 }

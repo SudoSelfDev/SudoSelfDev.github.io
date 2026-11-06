@@ -32,6 +32,21 @@
     window.matchMedia('(min-width: 641px)').addEventListener('change', function (e) { if (e.matches) setMenu(false); });
   }
 
+  // Scroll reveal
+  var items = document.querySelectorAll('.reveal');
+  if (items.length) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    } else {
+      items.forEach(function (el) { el.classList.add('in'); });
+    }
+  }
+
   function copyText(text, button, idle) {
     function done(msg) {
       button.textContent = msg;

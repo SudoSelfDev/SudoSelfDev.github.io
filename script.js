@@ -56,12 +56,4 @@
     b.addEventListener('click', function () { copyText(pre.innerText, b, 'Copy'); });
     header.appendChild(b);
   });
-
-  // Copy button for the email address
-  var copyMail = document.getElementById('copy-email');
-  if (copyMail) {
-    copyMail.addEventListener('click', function () {
-      copyText(document.getElementById('addr').textContent, copyMail, 'Copy');
-    });
-  }
 })();

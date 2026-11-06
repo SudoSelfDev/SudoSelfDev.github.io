@@ -398,6 +398,14 @@ h2.section-title {
 .js .reveal.in { opacity: 1; transform: none; }
 .js .entry.reveal.in { transition: opacity .7s ease var(--d, 0ms), transform .3s, border-color .2s; }
 
+/* Page changes: a short crossfade, with the header held still. Browsers without support just navigate normally. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  .site-header { view-transition-name: site-header; }
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: .24s; animation-timing-function: ease; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .reveal { opacity: 1; transform: none; }

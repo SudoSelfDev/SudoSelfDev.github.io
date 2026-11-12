@@ -15,6 +15,7 @@ import html
 import json
 import math
 import re
+import shutil
 import tomllib
 from pathlib import Path
 
@@ -444,6 +445,18 @@ def build_sitemap(logs):
     write('robots.txt', f'User-agent: *\nAllow: /\n\nSitemap: {URL}/sitemap.xml\n')
 
 
+def prune_logs(logs):
+    """Remove generated pages whose Markdown source no longer exists."""
+    keep = {log['slug'] for log in logs}
+    for folder in sorted((ROOT / 'blogs').iterdir()):
+        if folder.is_dir() and folder.name not in keep:
+            if [p.name for p in folder.iterdir()] == ['index.html']:
+                shutil.rmtree(folder)
+                print(f'  removed blogs/{folder.name}/ (no matching file in content/logs)')
+            else:
+                print(f'  left blogs/{folder.name}/ alone: it has no source but holds other files')
+
+
 def main():
     logs = load_logs()
     print(f'Building {SITE["name"]} with {len(logs)} log(s)')
@@ -451,6 +464,7 @@ def main():
     build_logs_index(logs)
     for log in logs:
         build_log(log)
+    prune_logs(logs)
     build_404()
     build_feed(logs)
     build_sitemap(logs)

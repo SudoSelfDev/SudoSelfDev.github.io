@@ -64,6 +64,12 @@ Then write normal Markdown. A few extras:
 
 The build adds the table of contents, the reading time, the logs list entry, the feed entry and the sitemap entry.
 
+### Remove a log
+
+Delete its file from `content/logs/` and run the build. The build removes the generated page and takes the log out of the logs list, the home page, the feed and the sitemap. Commit and push to make the removal live.
+
+To throw away a build you have not committed yet, including a new log you changed your mind about, delete the new `.md` file and run the build again.
+
 ## Settings
 
 `site.toml` holds the site name, links and contact address. It also has optional blocks, commented out with examples:

@@ -1,0 +1,31 @@
+# Site settings for sudoself.dev. Run `python3 build.py` after changing anything here.
+
+[site]
+name = "sudoself.dev"
+url = "https://www.sudoself.dev"
+author = "El Mehdi"
+description = "Portfolio of El Mehdi, a cloud engineer in the making."
+email = "contact@sudoself.dev"
+github = "SudoSelfDev"
+x = "ElAzgaou"
+year = 2026
+
+# Optional. Fill these in and a button appears in "Say hello" (and LinkedIn in the footer).
+linkedin = ""   # e.g. "https://www.linkedin.com/in/your-handle/"
+resume = ""     # e.g. "/assets/resume.pdf" after adding that file
+
+# Optional: roadmap progress. Uncomment and edit; it appears under "What I'm learning".
+# status is one of: "done", "current", "todo"
+#
+# [[roadmap]]
+# name = "Phase name"
+# detail = "Short note on what it covers"
+# status = "current"
+
+# Optional: projects. Uncomment and edit; a Projects section and nav link appear.
+#
+# [[projects]]
+# name = "Project name"
+# description = "One or two sentences on what it does and what you learned."
+# url = "https://github.com/SudoSelfDev/your-repo"
+# tags = ["Bash", "Linux"]

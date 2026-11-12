@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>sudoself.dev logs</title>
+  <subtitle>Technical logs and notes by El Mehdi.</subtitle>
+  <link href="https://www.sudoself.dev/blogs/feed.xml" rel="self"/>
+  <link href="https://www.sudoself.dev/blogs/"/>
+  <id>https://www.sudoself.dev/blogs/</id>
+  <updated>2026-03-27T00:00:00Z</updated>
+  <author><name>El Mehdi</name></author>
+  <entry>
+    <title>Obsidian Vault Sync with Git/GitHub</title>
+    <link href="https://www.sudoself.dev/blogs/obsidian-git-sync/"/>
+    <id>https://www.sudoself.dev/blogs/obsidian-git-sync/</id>
+    <published>2026-03-27T00:00:00Z</published>
+    <updated>2026-03-27T00:00:00Z</updated>
+    <summary>A comprehensive guide to syncing your Obsidian vault across devices using Git and GitHub — covering initial setup, SSH keys, daily workflow, and automation scripts for both Ubuntu and Android (Termux).</summary>
+  </entry>
+</feed>

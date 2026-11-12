@@ -47,6 +47,23 @@
     }
   }
 
+  // Highlight the nav link for the section in view (home page)
+  var spyLinks = {};
+  document.querySelectorAll('#site-nav a[data-section]').forEach(function (a) { spyLinks[a.getAttribute('data-section')] = a; });
+  var spySections = ['about', 'learning', 'projects', 'logs', 'contact']
+    .map(function (id) { return document.getElementById(id); })
+    .filter(function (el) { return el && spyLinks[el.id]; });
+  if (spySections.length > 1 && 'IntersectionObserver' in window) {
+    var visible = {};
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+      var current = null;
+      spySections.forEach(function (s) { if (visible[s.id] && !current) current = s.id; });
+      Object.keys(spyLinks).forEach(function (k) { spyLinks[k].classList.toggle('active', k === current); });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    spySections.forEach(function (s) { spy.observe(s); });
+  }
+
   function copyText(text, button, idle) {
     function done(msg) {
       button.textContent = msg;

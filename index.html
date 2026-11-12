@@ -7,19 +7,25 @@
 <meta name="description" content="Portfolio of El Mehdi, a cloud engineer in the making.">
 <link rel="canonical" href="https://www.sudoself.dev/">
 <link rel="icon" type="image/png" href="/favicon.png">
+<link rel="alternate" type="application/atom+xml" title="sudoself.dev logs" href="/blogs/feed.xml">
 <meta property="og:site_name" content="sudoself.dev">
 <meta property="og:title" content="sudoself.dev | Cloud Engineer Portfolio">
 <meta property="og:description" content="Portfolio of El Mehdi, a cloud engineer in the making.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.sudoself.dev/">
-<meta name="twitter:card" content="summary">
-<script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}document.documentElement.setAttribute('data-theme',t);document.documentElement.classList.add('js')})();</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v=6">
+<meta property="og:image" content="https://www.sudoself.dev/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.sudoself.dev/assets/og.png">
+<script>(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}var d=document.documentElement;d.setAttribute('data-theme',t);d.classList.add('js');var l=document.createElement('link');l.rel='preload';l.as='image';l.href=t==='light'?'/assets/portrait.webp':'/assets/portrait-dark.webp';document.head.appendChild(l);})();</script>
+<link rel="preload" href="/assets/fonts/jost.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/crimson-pro.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=fe79358e">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "El Mehdi", "url": "https://www.sudoself.dev/", "image": "https://www.sudoself.dev/assets/og.png", "description": "Portfolio of El Mehdi, a cloud engineer in the making.", "sameAs": ["https://github.com/SudoSelfDev", "https://x.com/ElAzgaou"]}</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="/">[sudoself.dev]</a>
   <div class="header-tools">
@@ -28,10 +34,10 @@
   </div>
   <nav id="site-nav" aria-label="Main">
     <ul>
-      <li><a href="/#about">About</a></li>
-      <li><a href="/#learning">Learning</a></li>
-      <li><a href="/blogs/">Logs</a></li>
-      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/#about" data-section="about">About</a></li>
+      <li><a href="/#learning" data-section="learning">Learning</a></li>
+      <li><a href="/blogs/" data-section="logs">Logs</a></li>
+      <li><a href="/#contact" data-section="contact">Contact</a></li>
     </ul>
   </nav>
 </header>
@@ -44,7 +50,7 @@
   </div>
 </header>
 
-<main>
+<main id="main">
   <div class="wrap intro" id="about">
     <p class="status"><i></i>Status: System Online // Region: Global</p>
     <p class="kicker">Cloud Engineer, in the making</p>
@@ -65,6 +71,7 @@
         <div class="reveal" style="--d:220ms"><h3>Networking</h3><p>Understanding how systems talk to each other, and the infrastructure that follows from it.</p></div>
       </div>
       <p class="roadmap reveal">I'm building this foundation through the <a href="https://learntocloud.guide/" target="_blank" rel="noopener">Learn to Cloud</a> roadmap by <a href="https://x.com/madebygps" target="_blank" rel="noopener">@madebygps</a>. Rather than just skimming the surface, I'm mastering the fundamentals from the ground up. The destination is clear: a career as a Cloud Engineer.</p>
+      
     </div>
   </section>
 
@@ -74,7 +81,7 @@
       <a class="entry reveal" href="/blogs/obsidian-git-sync/">
         <p class="meta">2026-03-27 // LOG_001</p>
         <h3>Obsidian Vault Sync with Git/GitHub</h3>
-        <p>A comprehensive guide to syncing your Obsidian vault across devices using Git and GitHub, covering initial setup, SSH keys, daily workflow, and automation scripts for both Ubuntu and Android (Termux).</p>
+        <p>A comprehensive guide to syncing your Obsidian vault across devices using Git and GitHub — covering initial setup, SSH keys, daily workflow, and automation scripts for both Ubuntu and Android (Termux).</p>
         <span class="more">Read the log</span>
       </a>
       <p class="all-logs reveal"><a href="/blogs/">/all_logs</a></p>
@@ -100,10 +107,11 @@
     <li><a href="https://github.com/SudoSelfDev" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>SudoSelfDev</a></li>
     <li><a href="https://x.com/ElAzgaou" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>@ElAzgaou</a></li>
     <li><a href="https://learntocloud.guide/" target="_blank" rel="noopener">Learn to Cloud</a></li>
+    <li><a href="/blogs/feed.xml">RSS feed</a></li>
   </ul></div>
   <div><h4>Say hi</h4><ul><li><a href="mailto:contact@sudoself.dev">contact@sudoself.dev</a></li></ul></div>
 </footer>
 <p class="copy">&copy; 2026 sudoself.dev</p>
-<script src="/script.js?v=6"></script>
+<script src="/script.js?v=fe79358e"></script>
 </body>
 </html>

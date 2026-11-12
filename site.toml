@@ -9,9 +9,10 @@ email = "contact@sudoself.dev"
 github = "SudoSelfDev"
 x = "ElAzgaou"
 year = 2026
+linkedin = "https://www.linkedin.com/in/elmehdiazgaou"
 
 # Optional. Fill these in and a button appears in "Say hello" (and LinkedIn in the footer).
-linkedin = ""   # e.g. "https://www.linkedin.com/in/your-handle/"
+  
 resume = ""     # e.g. "/assets/resume.pdf" after adding that file
 
 # Optional: roadmap progress. Uncomment and edit; it appears under "What I'm learning".

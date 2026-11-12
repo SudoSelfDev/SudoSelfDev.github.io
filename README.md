@@ -6,12 +6,22 @@ The previous version of the site is kept on the `archive/v1` branch.
 
 ## Build
 
+Set up once. The site's two Python libraries go into a private `.venv` folder, because recent Ubuntu and Debian versions do not allow `pip` to install into the system Python:
+
 ```bash
-pip install -r requirements.txt
+python3 -m venv .venv
 ```
 
 ```bash
-python3 build.py
+.venv/bin/pip install -r requirements.txt
+```
+
+If the first command says `venv` is missing, run `sudo apt install python3-venv` and try again.
+
+Then build after every change:
+
+```bash
+.venv/bin/python build.py
 ```
 
 Commit the generated files along with your change. GitHub Pages serves this branch as it is, so a change is live only after the build output is committed and pushed.

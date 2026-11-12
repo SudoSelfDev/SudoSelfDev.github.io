@@ -4,8 +4,9 @@
 Reads site.toml and content/logs/*.md, then writes the HTML pages, the logs
 feed, sitemap.xml and robots.txt into this folder. Run it after every change:
 
-    pip install -r requirements.txt
-    python3 build.py
+    python3 -m venv .venv
+    .venv/bin/pip install -r requirements.txt
+    .venv/bin/python build.py
 
 See README.md for how to write a log.
 """
